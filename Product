@@ -65,10 +65,44 @@ let html="";
 document.getElementById("productList").innerHTML = html;
 
 // UPI payment
-function buy(name,price){
- let upi="9953311542@ybl";
- let url=`upi://pay?pa=${upi}&pn=ElectroElectric&am=${price}&cu=INR`;
- window.location.href=url;
+function function buy(name, price){
+
+  let state = prompt("Enter your State (Delhi / Other)");
+
+  if(!state){
+    alert("State required");
+    return;
+  }
+
+  let delivery = 150;
+
+  if(state.toLowerCase() === "delhi"){
+    delivery = 100;
+  }
+
+  let total = price + delivery;
+
+  // Minimum order check
+  if(total < 500){
+    alert("Minimum order ₹500 hona chahiye");
+    return;
+  }
+
+  let confirmOrder = confirm(
+    "Product: " + name +
+    "\nPrice: ₹" + price +
+    "\nDelivery: ₹" + delivery +
+    "\nTotal: ₹" + total +
+    "\n\nProceed to payment?"
+  );
+
+  if(!confirmOrder) return;
+
+  let upi="9953311542@ybl";
+
+  let url=`upi://pay?pa=${upi}&pn=ElectroElectric&am=${total}&cu=INR`;
+
+  window.location.href = url;
 }
 
 </script>
